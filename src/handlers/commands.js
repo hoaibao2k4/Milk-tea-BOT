@@ -8,6 +8,7 @@ const { formatCart } = require("../utils/cart");
 const { getCartKeyboard } = require("../utils/keyboards");
 const { getAllOrders, getOrderByCode, getOrderItems } = require("../data/db");
 const { clearCurrentSelection, clearCheckout } = require("../data/session");
+const { formatDateVN } = require("../utils/order");
 
 function getStartMessage(ctx) {
   const firstName = ctx.from.first_name || "bạn";
@@ -95,8 +96,7 @@ function registerCommandHandlers(bot) {
           const emoji = statusEmoji[order.status] || "❓";
           const amount = Number(order.total_amount).toLocaleString("vi-VN");
 
-          const dt = new Date(order.created_at);
-          const formattedDate = `${dt.getDate().toString().padStart(2, "0")}/${(dt.getMonth() + 1).toString().padStart(2, "0")}/${dt.getFullYear()} ${dt.getHours().toString().padStart(2, "0")}:${dt.getMinutes().toString().padStart(2, "0")}`;
+          const formattedDate = formatDateVN(order.created_at);
 
           return (
             `📦 ${emoji} <b>${order.order_code}</b> — ${order.status.toUpperCase()}\n` +
@@ -143,8 +143,7 @@ function registerCommandHandlers(bot) {
       const statusEmoji = { pending: "⏳", confirmed: "✅", cancelled: "❌" };
       const emoji = statusEmoji[order.status] || "❓";
 
-      const dt = new Date(order.created_at);
-      const formattedDate = `${dt.getDate().toString().padStart(2, "0")}/${(dt.getMonth() + 1).toString().padStart(2, "0")}/${dt.getFullYear()} ${dt.getHours().toString().padStart(2, "0")}:${dt.getMinutes().toString().padStart(2, "0")}`;
+      const formattedDate = formatDateVN(order.created_at);
 
       let detailText =
         `🧾 <b>CHI TIẾT ĐƠN HÀNG</b>\n` +

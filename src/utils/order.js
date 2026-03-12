@@ -32,8 +32,21 @@ function formatOrderSummary(session, username) {
 
 // Removed getConfirmOrderKeyboard
 
+function formatDateVN(dateInput) {
+  return new Date(dateInput).toLocaleString("en-GB", {
+    timeZone: "Asia/Ho_Chi_Minh",
+    hour12: false,
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).replace(",", "");
+}
+
 module.exports = {
   isValidPhone,
   formatCustomerInfo,
   formatOrderSummary,
+  formatDateVN,
 };

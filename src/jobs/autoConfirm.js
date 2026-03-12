@@ -3,6 +3,7 @@ const {
   updateOrderStatus,
   getOrderItems,
 } = require("../data/db");
+const { formatDateVN } = require("../utils/order");
 
 const GRACE_PERIOD_SECONDS = 180;
 
@@ -27,8 +28,7 @@ function startAutoConfirmJob(bot, adminChatId) {
             })
             .join("\n");
 
-          const dt = new Date(order.created_at);
-          const formattedDate = `${dt.getDate().toString().padStart(2, "0")}/${(dt.getMonth() + 1).toString().padStart(2, "0")}/${dt.getFullYear()} ${dt.getHours().toString().padStart(2, "0")}:${dt.getMinutes().toString().padStart(2, "0")}`;
+          const formattedDate = formatDateVN(order.created_at);
 
           let orderMsg =
             `🔔 <b>CÓ ĐƠN HÀNG MỚI XÁC NHẬN!</b>\n` +
